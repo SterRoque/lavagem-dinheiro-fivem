@@ -44,6 +44,10 @@ function App() {
                initialValue={50000}
                rate={50}
             />
+
+            <button className='mt-4 w-full cursor-pointer rounded-md bg-green-400 py-3 text-sm font-bold uppercase'>
+               Lavar Dinheiro
+            </button>
          </div>
       </div>
    );
