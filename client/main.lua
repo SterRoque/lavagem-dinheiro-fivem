@@ -36,6 +36,22 @@ RegisterNetEvent('washing:setDirty', function(total)
   SendNUIMessage({ action = 'setDirty', dirtyMoney = total })
 end)
 
+RegisterNetEvent('washing:result', function(success, message, cleanValue)
+  TriggerEvent('QBCore:Notify', message, success and 'success' or 'error')
+
+  SendNUIMessage({
+    action = 'washResult',
+    success = success,
+    message = message,
+    cleanValue = cleanValue,
+  })
+end)
+
+RegisterNUICallback('wash', function(data, cb)
+  TriggerServerEvent('washing:wash', tonumber(data.amount))
+  cb('ok')
+end)
+
 
 CreateThread(function()
   while true do

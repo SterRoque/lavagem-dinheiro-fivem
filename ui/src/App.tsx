@@ -25,7 +25,9 @@ function App() {
    }
 
    function handleReceive() {
+      fetchNui('wash', { amount: value });
       setIsWashing(false);
+      setValue(0);
    }
 
    useEffect(() => {
@@ -44,6 +46,10 @@ function App() {
 
          if (action === 'setDirty') {
             setDirtyMoney(dirtyMoney);
+         }
+
+         if (action === 'washResult') {
+            setVisible(false);
          }
       }
 
@@ -89,7 +95,7 @@ function App() {
                   />
                   <Card
                      title='Taxa de serviço'
-                     value='20%'
+                     value={`${fee}%`}
                      icon={
                         <div className='flex h-8 w-8 items-center justify-center rounded-md bg-amber-500/40 text-amber-200'>
                            <RiMoneyDollarCircleLine size={20} />
