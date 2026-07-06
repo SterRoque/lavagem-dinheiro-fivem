@@ -16,7 +16,9 @@ local function openWashUI()
   isUIOpen = true
 
   SetNuiFocus(true, true)
-  SendNUIMessage({ action = 'open' })
+  SendNUIMessage({ action = 'open', fee = Config.Fee })
+
+  TriggerServerEvent('washing:requestDirty')
 end
 
 local function closeWashUI()
@@ -29,6 +31,11 @@ RegisterNUICallback('close', function(_, cb)
   closeWashUI()
   cb('ok')
 end)
+
+RegisterNetEvent('washing:setDirty', function(total)
+  SendNUIMessage({ action = 'setDirty', dirtyMoney = total })
+end)
+
 
 CreateThread(function()
   while true do

@@ -6,6 +6,7 @@ import { Input } from './components/input';
 import { InfoDetails } from './components/info-details';
 import { WashingScreen } from './components/washing-screen';
 import { fetchNui } from './utils/nui';
+import { formatCurrency } from './utils/format';
 
 const DIRTY_MONEY = 8000000;
 
@@ -13,6 +14,8 @@ function App() {
    const [isWashing, setIsWashing] = useState(false);
    const [value, setValue] = useState(0);
    const [visible, setVisible] = useState(false);
+   const [fee, setFee] = useState(20);
+   const [dirtyMoney, setDirtyMoney] = useState(0);
 
    function handleValueChange(event: React.ChangeEvent<HTMLInputElement>) {
       const onlyDigits = event.target.value.replace(/\D/g, '');
@@ -27,14 +30,20 @@ function App() {
 
    useEffect(() => {
       function handler(event: MessageEvent) {
-         const { action } = event.data;
+         const { action, fee, dirtyMoney } = event.data;
 
          if (action === 'open') {
+            setFee(fee);
+            setDirtyMoney(0);
             setVisible(true);
          }
 
          if (action === 'close') {
             setVisible(false);
+         }
+
+         if (action === 'setDirty') {
+            setDirtyMoney(dirtyMoney);
          }
       }
 
@@ -71,7 +80,7 @@ function App() {
                <div className='mt-3 flex justify-between gap-2'>
                   <Card
                      title='Dinheiro sujo'
-                     value='R$ 8000000'
+                     value={formatCurrency(dirtyMoney)}
                      icon={
                         <div className='flex h-8 w-8 items-center justify-center rounded-md bg-red-600/40 text-red-200'>
                            <TbBriefcase2 size={18} />
@@ -100,7 +109,7 @@ function App() {
 
                <InfoDetails
                   initialValue={value}
-                  rate={50}
+                  rate={fee}
                />
 
                <button
