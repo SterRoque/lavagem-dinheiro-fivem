@@ -7,17 +7,22 @@ author 'Ster'
 description ''
 version '1.0.0'
 
-ui_page 'web/dist/index.html'
+ui_page 'ui/build/index.html'
 
 files {
-    'web/dist/index.html',
-    'web/dist/assets/*',
+    'ui/build/index.html',
+    'ui/build/assets/*',
 }
 
 client_scripts {
-    'client/client.lua'
+    'client/main.lua'
 }
 
 server_scripts {
-    'server/server.lua'
+    'server/main.lua'
+}
+
+shared_scripts {
+    'shared/config.lua',
+    '@qb-core/shared/locale.lua'
 }
