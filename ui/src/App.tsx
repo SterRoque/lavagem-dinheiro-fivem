@@ -1,6 +1,7 @@
 import { TbBriefcase2 } from 'react-icons/tb';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 import { Card } from './components/card';
+import { Input } from './components/input';
 
 function App() {
    return (
@@ -28,6 +29,13 @@ function App() {
                         <RiMoneyDollarCircleLine size={20} />
                      </div>
                   }
+               />
+            </div>
+
+            <div className='mt-4'>
+               <Input
+                  label='Digite o valor que deseja lavar'
+                  placeholder='0,00'
                />
             </div>
          </div>
