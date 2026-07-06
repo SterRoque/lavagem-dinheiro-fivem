@@ -1,13 +1,37 @@
+import { useState } from 'react';
 import { TbBriefcase2 } from 'react-icons/tb';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 import { Card } from './components/card';
 import { Input } from './components/input';
 import { InfoDetails } from './components/info-details';
+import { WashingScreen } from './components/washing-screen';
+
+const DIRTY_MONEY = 8000000;
 
 function App() {
+   const [isWashing, setIsWashing] = useState(false);
+   const [value, setValue] = useState(0);
+
+   function handleValueChange(event: React.ChangeEvent<HTMLInputElement>) {
+      const onlyDigits = event.target.value.replace(/\D/g, '');
+      const parsed = Number(onlyDigits);
+
+      setValue(Math.min(parsed, DIRTY_MONEY));
+   }
+
+   function handleReceive() {
+      setIsWashing(false);
+   }
+
    return (
       <div className='flex h-screen items-center justify-center'>
-         <div className='h-100 w-100 rounded-2xl bg-neutral-800 p-6'>
+         {isWashing ? (
+            <WashingScreen
+               duration={30}
+               onReceive={handleReceive}
+            />
+         ) : (
+            <div className='h-100 w-100 rounded-2xl bg-neutral-800 p-6'>
             <h1 className='text-center text-xl font-bold text-white/80 uppercase'>
                Sistema de Lavagem
             </h1>
@@ -37,18 +61,25 @@ function App() {
                <Input
                   label='Digite o valor que deseja lavar'
                   placeholder='0,00'
+                  value={value === 0 ? '' : value.toLocaleString('pt-BR')}
+                  onChange={handleValueChange}
                />
             </div>
 
             <InfoDetails
-               initialValue={50000}
+               initialValue={value}
                rate={50}
             />
 
-            <button className='mt-4 w-full cursor-pointer rounded-md bg-green-400 py-3 text-sm font-bold uppercase'>
+            <button
+               onClick={() => setIsWashing(true)}
+               disabled={value <= 0}
+               className='mt-4 w-full rounded-md py-3 text-sm font-bold uppercase transition-colors enabled:cursor-pointer enabled:bg-green-400 disabled:cursor-not-allowed disabled:bg-neutral-700 disabled:text-white/40'
+            >
                Lavar Dinheiro
             </button>
-         </div>
+            </div>
+         )}
       </div>
    );
 }
