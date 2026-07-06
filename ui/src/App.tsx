@@ -2,11 +2,12 @@ import { TbBriefcase2 } from 'react-icons/tb';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 import { Card } from './components/card';
 import { Input } from './components/input';
+import { InfoDetails } from './components/info-details';
 
 function App() {
    return (
       <div className='flex h-screen items-center justify-center'>
-         <div className='h-120 w-100 rounded-2xl bg-neutral-800 p-6'>
+         <div className='h-100 w-100 rounded-2xl bg-neutral-800 p-6'>
             <h1 className='text-center text-xl font-bold text-white/80 uppercase'>
                Sistema de Lavagem
             </h1>
@@ -32,12 +33,17 @@ function App() {
                />
             </div>
 
-            <div className='mt-4'>
+            <div className='my-4'>
                <Input
                   label='Digite o valor que deseja lavar'
                   placeholder='0,00'
                />
             </div>
+
+            <InfoDetails
+               initialValue={50000}
+               rate={50}
+            />
          </div>
       </div>
    );
