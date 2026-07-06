@@ -1,7 +1,8 @@
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
    label: string;
+   onMax?: () => void;
 };
-export function Input({ label, ...rest }: InputProps) {
+export function Input({ label, onMax, ...rest }: InputProps) {
    return (
       <div>
          <span className='text-sm font-medium text-white/60'>{label}</span>
@@ -11,7 +12,11 @@ export function Input({ label, ...rest }: InputProps) {
                className='h-full w-[80%] pl-4 text-xs text-white focus:outline-none'
                {...rest}
             />
-            <button className='h-5 w-[10%] cursor-pointer rounded-md text-xs font-bold text-white'>
+            <button
+               type='button'
+               onClick={onMax}
+               className='h-5 w-[10%] cursor-pointer rounded-md text-xs font-bold text-white'
+            >
                MAX
             </button>
          </div>

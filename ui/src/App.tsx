@@ -8,8 +8,6 @@ import { WashingScreen } from './components/washing-screen';
 import { fetchNui } from './utils/nui';
 import { formatCurrency } from './utils/format';
 
-const DIRTY_MONEY = 8000000;
-
 function App() {
    const [isWashing, setIsWashing] = useState(false);
    const [value, setValue] = useState(0);
@@ -21,7 +19,7 @@ function App() {
       const onlyDigits = event.target.value.replace(/\D/g, '');
       const parsed = Number(onlyDigits);
 
-      setValue(Math.min(parsed, DIRTY_MONEY));
+      setValue(Math.min(parsed, dirtyMoney));
    }
 
    function handleReceive() {
@@ -110,6 +108,7 @@ function App() {
                      placeholder='0,00'
                      value={value === 0 ? '' : value.toLocaleString('pt-BR')}
                      onChange={handleValueChange}
+                     onMax={() => setValue(dirtyMoney)}
                   />
                </div>
 
